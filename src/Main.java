@@ -1,5 +1,6 @@
 import db.query.InsertQuery;
 import db.query.SelectQuery;
+import ui.LoginStage;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -7,12 +8,7 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws SQLException {
-//        System.out.println("Hello world!");
-        InsertQuery iq = new InsertQuery(
-                "emp",
-                List.of(12, "EMP12")
-        );
-        iq.execute();
+        System.out.println("Hello world!");
 
         SelectQuery sq = new SelectQuery("emp", null, null);
 
