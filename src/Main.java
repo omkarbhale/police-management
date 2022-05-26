@@ -1,20 +1,27 @@
-import db.query.InsertQuery;
-import db.query.SelectQuery;
-import ui.LoginStage;
+import javafx.application.Application;
+import javafx.stage.Stage;
+import ui.scene.LoginScene;
+import ui.SceneManager;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.List;
+public class Main extends Application {
 
-public class Main {
-    public static void main(String[] args) throws SQLException {
-        System.out.println("Hello world!");
+    SceneManager sceneManager;
+    public static void main(String[] args) {
+        launch(args);
+    }
 
-        SelectQuery sq = new SelectQuery("emp", null, null);
+    @Override
+    public void start(Stage primaryStage) {
+        SceneManager.getInstance().setStage(primaryStage);
 
-        ResultSet rs = sq.execute();
-        while(rs.next()) {
-            System.out.println(rs.getInt(1) + " " + rs.getString(2));
-        }
+        initializeStage(primaryStage);
+
+        // Load login scene first
+        SceneManager.getInstance().loadScene(LoginScene.scene());
+        primaryStage.show();
+    }
+
+    private void initializeStage(Stage stage) {
+        stage.setTitle("Police Management System");
     }
 }
