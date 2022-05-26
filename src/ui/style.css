@@ -1,11 +1,32 @@
 .root {
-    -fx-background-color: white;
+    -fx-background-color: #191919;
     -fx-font-size: 12pt;
+}
+
+.text-field {
+    -fx-background-color: #e0e0e0;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
 }
 
 .highlight-red {
     -fx-border-color: #ff0000;
     -fx-border-width: 2px;
+}
+
+.selected {
+    -fx-background-color: #e0e0e0;
+    -fx-border-color: #05f505;
+    -fx-border-width: 5px;
+}
+
+.label {
+    -fx-text-fill: #f0f0f0;
+}
+
+.button {
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
 }
 
 .button:focused {

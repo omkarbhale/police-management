@@ -18,8 +18,6 @@ public class Main extends Application {
 
         // Load login scene first
         SceneManager.getInstance().loadScene(LoginScene.scene());
-
-        primaryStage.setMaximized(true);
         primaryStage.show();
     }
 

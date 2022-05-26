@@ -23,7 +23,7 @@ public class Authentication {
     public boolean authenticate(String username, String password) {
         System.out.println("Trying with: "+username+" "+password);
         // Check for auth here
-        if(false) {
+        if(true) {
             this.username = username;
             this.password = password;
             this.isAuthenticated = true;

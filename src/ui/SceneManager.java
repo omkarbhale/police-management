@@ -24,6 +24,9 @@ public class SceneManager {
 
     public void loadScene(Scene s) {
         currentScene = s;
+        stage.hide();
         stage.setScene(s);
+        stage.setMaximized(true);
+        stage.show();
     }
 }

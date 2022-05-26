@@ -38,10 +38,11 @@ public class LoginScene extends Scene {
         HBox hb = new HBox();
         hb.setAlignment(Pos.CENTER);
         hb.getChildren().addAll(title);
+        hb.setPadding(new Insets(30, 0, 0, 0));
 
         GridPane gp = new GridPane();
         gp.setAlignment(Pos.TOP_CENTER);
-        gp.setPadding(new Insets(250, 50, 50, 50));
+        gp.setPadding(new Insets(50, 50, 50, 50));
         gp.setVgap(10);
         gp.setHgap(20);
         gp.add(loginHeading, 0, 0);
@@ -51,6 +52,9 @@ public class LoginScene extends Scene {
         gp.add(passField, 1, 2);
         gp.add(signupButton, 0, 3);
         gp.add(loginButton, 1, 3);
+        gp.setStyle("-fx-background-color: #212121;");
+        gp.setMaxHeight(200);
+        gp.setMaxWidth(600);
 
         bp.setTop(hb);
         bp.setCenter(gp);
@@ -88,6 +92,7 @@ public class LoginScene extends Scene {
         DropShadow dropShadow = new DropShadow();
         dropShadow.setOffsetX(1);
         dropShadow.setOffsetY(1);
+
 
         //Adding text and DropShadow effect to it
         title = new Label("Police Management System");
