@@ -105,16 +105,14 @@ public class LoginScene extends Scene {
 
     private void logIn(String username, String password) {
         if(username.equals("")) {
-            System.out.println("Usernaame is null");
             highlightRed(usernameField, true);
             return;
         }
         if(password.equals("")) {
-            System.out.println("passf is null");
             highlightRed(passField, true);
             return;
         }
-        boolean isAuthenticated = Authentication.instance().authenticate(username, password);
+        boolean isAuthenticated = Authentication.getInstance().authenticate(username, password);
         if(isAuthenticated) {
             SceneManager.getInstance().loadScene(HomeScene.scene());
             return;

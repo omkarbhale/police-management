@@ -1,12 +1,15 @@
 package ui.scene.component;
 
+import auth.Authentication;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import ui.SceneManager;
 import ui.scene.HomeScene;
+import ui.scene.LoginScene;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -18,6 +21,9 @@ public class Sidebar extends VBox {
     Button FIRButton;
     Button criminalButton;
     Button policeButton;
+    Button logoutButton;
+
+    // Holds one of the above button
     Button selectedButton;
 
     public Sidebar(HomeScene scene) {
@@ -28,11 +34,14 @@ public class Sidebar extends VBox {
         FIRButton = createSidebarButton("FIR");
         criminalButton = createSidebarButton("Criminal");
         policeButton = createSidebarButton("Police");
+        logoutButton = createSidebarButton("Log out");
         imageView = policeIcon();
+
+        logoutButton.setOnAction(e -> logOut() );
 
         setPadding(new Insets(70, 10, 10, 10));
         setSpacing(10);
-        getChildren().addAll(imageView, FIRButton, criminalButton, policeButton);
+        getChildren().addAll(imageView, FIRButton, criminalButton, policeButton, logoutButton);
         setStyle("-fx-background-color: #292929");
     }
 
@@ -76,5 +85,9 @@ public class Sidebar extends VBox {
         } else if(b == policeButton) {
 
         }
+    }
+
+    private void logOut() {
+        Authentication.getInstance().logOut();
     }
 }

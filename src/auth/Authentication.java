@@ -3,7 +3,7 @@ package auth;
 public class Authentication {
     private static Authentication instance;
 
-    public static Authentication instance() {
+    public static Authentication getInstance() {
         if(Authentication.instance == null) {
             Authentication.instance = new Authentication();
         }
@@ -34,5 +34,12 @@ public class Authentication {
             this.isAuthenticated = false;
             return false;
         }
+    }
+
+    public void logOut() {
+        if(!isAuthenticated) return;
+        isAuthenticated = false;
+        this.username = null;
+        this.password = null;
     }
 }
