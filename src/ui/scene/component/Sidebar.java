@@ -2,14 +2,11 @@ package ui.scene.component;
 
 import auth.Authentication;
 import javafx.geometry.Insets;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
-import ui.SceneManager;
 import ui.scene.HomeScene;
-import ui.scene.LoginScene;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -35,9 +32,21 @@ public class Sidebar extends VBox {
         criminalButton = createSidebarButton("Criminal");
         policeButton = createSidebarButton("Police");
         logoutButton = createSidebarButton("Log out");
-        imageView = policeIcon();
 
+        // Button event handlers
+        FIRButton.setOnAction(e -> {
+            selectButton(FIRButton);
+            parentScene.setContent(new FIRPane());
+        });
+        criminalButton.setOnAction(e -> {
+            selectButton(criminalButton);
+        });
+        policeButton.setOnAction(e -> {
+            selectButton(policeButton);
+        });
         logoutButton.setOnAction(e -> logOut() );
+
+        imageView = policeIcon();
 
         setPadding(new Insets(70, 10, 10, 10));
         setSpacing(10);
@@ -49,7 +58,6 @@ public class Sidebar extends VBox {
         Button b = new Button(text);
         b.setMinWidth(250);
         b.setStyle("-fx-font-size: 28pt; ");
-        b.setOnAction(e -> selectButton(b));
         return b;
     }
 
@@ -73,21 +81,12 @@ public class Sidebar extends VBox {
 
     private void selectButton(Button b) {
         clearClasses();
-
         selectedButton = b;
         selectedButton.getStyleClass().add("selected");
-
-        // Write code to change main content
-        if(b == FIRButton) {
-
-        } else if(b == criminalButton) {
-
-        } else if(b == policeButton) {
-
-        }
     }
 
     private void logOut() {
+        System.out.println("Logging out");
         Authentication.getInstance().logOut();
     }
 }

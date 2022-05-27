@@ -34,3 +34,24 @@
     -fx-background-insets: 0, 1, 2;
     -fx-background-radius: 5, 4, 3;
 }
+
+.tab-header-background {
+    -fx-background-color: #292929
+}
+
+.tab-pane {
+  -fx-tab-min-width:120px;
+  -fx-tab-max-width:120px;
+  -fx-tab-min-height:50px;
+  -fx-tab-max-height:50px;
+}
+
+.tab {
+    -fx-background-color: royalblue;
+    -fx-font-size: 18pt;
+}
+
+.tab:selected {
+    -fx-background-color: blue;
+
+}

@@ -1,5 +1,8 @@
 package auth;
 
+import ui.SceneManager;
+import ui.scene.LoginScene;
+
 public class Authentication {
     private static Authentication instance;
 
@@ -21,7 +24,6 @@ public class Authentication {
     }
 
     public boolean authenticate(String username, String password) {
-        System.out.println("Trying with: "+username+" "+password);
         // Check for auth here
         if(true) {
             this.username = username;
@@ -41,5 +43,6 @@ public class Authentication {
         isAuthenticated = false;
         this.username = null;
         this.password = null;
+        SceneManager.getInstance().loadScene(LoginScene.scene());
     }
 }
