@@ -139,10 +139,10 @@ class PoliceInsertForm extends BorderPane {
         );
         boolean isSaved = PoliceModel.save(police);
         if(isSaved) {
-            MSGBox.message("Police saved successfully");
+            MSGBox.message("Success", "Police saved successfully");
             clearFields();
         } else {
-            MSGBox.message("Some error occurred!");
+            MSGBox.message("Error", "Some error occurred!");
         }
     }
 
@@ -215,10 +215,10 @@ class PoliceViewForm extends BorderPane {
 
         private void delete(Police police) {
             if(PoliceModel.delete(police)) {
-                MSGBox.message("Deleted successfully");
+                MSGBox.message("Success", "Deleted successfully");
                 parent.loadPolice();
             } else {
-                MSGBox.message("Some error occurred");
+                MSGBox.message("Error", "Some error occurred");
             }
         }
     }
@@ -247,7 +247,6 @@ class PoliceViewForm extends BorderPane {
     private void initialize() {
         titleLabel = new Label("View Police");
         titleLabel.setFont(Font.font(null, FontWeight.BOLD, 26));
-        loadPolice();
     }
 
     private void loadPolice() {
@@ -264,7 +263,7 @@ class PoliceViewForm extends BorderPane {
                 gp.addRow(i, new PoliceCard(this, list.get(i)));
             }
         else
-            MSGBox.message("Some error occurred");
+            MSGBox.message("Error", "Some error occurred");
 
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setStyle("-fx-background: #191919; -fx-border-width: 0; ");

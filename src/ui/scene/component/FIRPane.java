@@ -142,13 +142,13 @@ class FIRInsertForm extends BorderPane {
             );
             boolean isSaved = FIRModel.save(fir);
             if(isSaved) {
-                MSGBox.message("FIR saved successfully");
+                MSGBox.message("Success", "FIR saved successfully");
                 clearFields();
             } else {
-                MSGBox.message("Some error occurred!");
+                MSGBox.message("Error", "Some error occurred!");
             }
         } catch (Exception e) {
-            MSGBox.message("IDs should be numbers");
+            MSGBox.message("Error", "IDs should be numbers");
         }
     }
 
@@ -209,10 +209,10 @@ class FIRViewForm extends BorderPane {
 
         private void delete(FIR fir) {
             if(FIRModel.delete(fir)) {
-                MSGBox.message("Deleted successfully");
+                MSGBox.message("Success", "Deleted successfully");
                 parent.loadFIRs();
             } else {
-                MSGBox.message("Some error occurred");
+                MSGBox.message("Error", "Some error occurred");
             }
         }
     }
@@ -258,7 +258,7 @@ class FIRViewForm extends BorderPane {
                 gp.addRow(i, new FIRCard(this, list.get(i)));
             }
         else
-            MSGBox.message("Some error occurred");
+            MSGBox.message("Error", "Some error occurred");
 
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setStyle("-fx-background: #191919; -fx-border-width: 0; ");

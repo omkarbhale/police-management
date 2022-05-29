@@ -123,10 +123,10 @@ class CriminalInsertForm extends BorderPane {
         );
         boolean isSaved = CriminalModel.save(criminal);
         if(isSaved) {
-            MSGBox.message("Criminal saved successfully");
+            MSGBox.message("Success", "Criminal saved successfully");
             clearFields();
         } else {
-            MSGBox.message("Some error occurred!");
+            MSGBox.message("Error", "Some error occurred!");
         }
     }
 
@@ -184,10 +184,10 @@ class CriminalViewForm extends BorderPane {
 
         private void delete(Criminal criminal) {
             if(CriminalModel.delete(criminal)) {
-                MSGBox.message("Deleted successfully");
+                MSGBox.message("Success", "Deleted successfully");
                 parent.loadCriminals();
             } else {
-                MSGBox.message("Some error occurred");
+                MSGBox.message("Error", "Some error occurred");
             }
         }
     }
@@ -233,7 +233,7 @@ class CriminalViewForm extends BorderPane {
                 gp.addRow(i, new CriminalCard(this, list.get(i)));
             }
         else
-            MSGBox.message("Some error occurred");
+            MSGBox.message("Error", "Some error occurred");
 
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setStyle("-fx-background: #191919; -fx-border-width: 0; ");
