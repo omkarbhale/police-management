@@ -12,7 +12,6 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Locale;
 
 public class Authentication {
     private static Authentication instance;
@@ -85,7 +84,7 @@ public class Authentication {
         byte[] bytes = str.getBytes(StandardCharsets.UTF_8);
         try {
             MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
-            byte[] hash = messageDigest.digest();
+            byte[] hash = messageDigest.digest(bytes);
             return bytesToHex(hash);
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
