@@ -215,7 +215,7 @@ class CriminalViewForm extends BorderPane {
     }
 
     private void initialize() {
-        titleLabel = new Label("View FIR");
+        titleLabel = new Label("View Criminal");
         titleLabel.setFont(Font.font(null, FontWeight.BOLD, 26));
         loadCriminals();
     }
@@ -256,7 +256,7 @@ public class CriminalPane extends BorderPane {
         vb.getChildren().addAll(tabPane);
 
         setTop(vb);
-        setContent(CriminalViewForm.getInstance());
+        setContent(CriminalInsertForm.getInstance());
     }
 
     private void initialize() {
@@ -272,7 +272,7 @@ public class CriminalPane extends BorderPane {
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
         tabPane.getSelectionModel().selectedItemProperty().addListener((o, oldTab, newTab) -> {
             if(newTab == t1) {
-                setContent(CriminalViewForm.getInstance());
+                setContent(CriminalInsertForm.getInstance());
             } else if(newTab == t2) {
                 setContent(CriminalViewForm.getInstance());
             }
