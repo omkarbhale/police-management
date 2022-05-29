@@ -2,6 +2,8 @@ package db.query;
 
 import db.Database;
 
+import java.sql.SQLException;
+
 public class DeleteQuery {
     final private String tableName;
     final private Condition condition;
@@ -11,7 +13,7 @@ public class DeleteQuery {
         this.condition = condition;
     }
 
-    public int execute() {
+    public int execute() throws SQLException {
         return Database.getInstance().executeUpdate(toString());
     }
 

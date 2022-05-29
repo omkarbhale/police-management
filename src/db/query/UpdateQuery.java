@@ -3,6 +3,7 @@ package db.query;
 import db.Database;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 public class UpdateQuery {
@@ -17,7 +18,7 @@ public class UpdateQuery {
         this.condition = condition;
     }
 
-    public int execute() {
+    public int execute() throws SQLException {
         return Database.getInstance().executeUpdate(toString());
     }
 

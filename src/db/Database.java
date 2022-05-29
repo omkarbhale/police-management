@@ -48,23 +48,17 @@ public class Database {
         }
     }
 
-    public ResultSet executeQuery(String query) {
+    public ResultSet executeQuery(String query) throws SQLException {
         Statement statement;
-        try {
-            statement = connection.createStatement();
-            return statement.executeQuery(query);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+
+        statement = connection.createStatement();
+        return statement.executeQuery(query);
+
     }
 
-    public int executeUpdate(String query) {
+    public int executeUpdate(String query) throws SQLException {
         Statement statement;
-        try {
             statement = connection.createStatement();
             return statement.executeUpdate(query);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 }

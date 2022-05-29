@@ -3,6 +3,7 @@ package db.query;
 import db.Database;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 public class InsertQuery {
@@ -14,7 +15,7 @@ public class InsertQuery {
         this.values = values;
     }
 
-    public boolean execute() {
+    public boolean execute() throws SQLException {
         int rowsAffected = Database.getInstance().executeUpdate(toString());
         return rowsAffected == 1;
     }

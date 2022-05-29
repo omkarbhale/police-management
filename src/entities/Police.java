@@ -3,14 +3,14 @@ package entities;
 import java.sql.Date;
 
 public class Police {
-    private int Police_id;
-    private String firstName;
-    private String middleName;
-    private String lastName;
-    private String post;
-    private Date DOB;
-    private String contactNo;
-    private String address;
+    public int Police_id;
+    public String firstName;
+    public String middleName;
+    public String lastName;
+    public String post;
+    public Date DOB;
+    public String contactNo;
+    public String address;
 
     public Police(int _Police_id,String _firstname,String _middlename,String _lastname,String _post,Date _DOB,String _contactNo,String _address) {
             Police_id= _Police_id;

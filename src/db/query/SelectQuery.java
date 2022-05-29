@@ -16,7 +16,7 @@ public class SelectQuery {
         this.condition = condition;
     }
 
-    public ResultSet execute() {
+    public ResultSet execute() throws SQLException {
         return Database.getInstance().executeQuery(toString());
     }
 

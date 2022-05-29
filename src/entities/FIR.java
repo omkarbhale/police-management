@@ -4,12 +4,12 @@ import java.sql.Date;
 
 public class FIR {
 
-    private int FIR_id;
-    private int Police_id;
-    private int Criminal_id;
-    private Date date;
-    private String Location;
-    private int Severity;
+    public int FIR_id;
+    public int Police_id;
+    public int Criminal_id;
+    public Date date;
+    public String Location;
+    public int Severity;
 
     public FIR(int _FIR_id,int _Police_id,int _Criminal_id,Date _date,String _Location,int _Severity){
         FIR_id=_FIR_id;
