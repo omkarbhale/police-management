@@ -34,7 +34,6 @@ public class FIRModel {
             insertQuery.execute();
             return true;
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
             return false;
         }
     }

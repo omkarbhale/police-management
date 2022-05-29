@@ -223,6 +223,7 @@ class FIRViewForm extends BorderPane {
         if(FIRViewForm.instance == null) {
             FIRViewForm.instance = new FIRViewForm();
         }
+        FIRViewForm.instance.loadFIRs();
         return FIRViewForm.instance;
     }
 
@@ -256,6 +257,8 @@ class FIRViewForm extends BorderPane {
             for(int i = 0; i < list.size(); i++) {
                 gp.addRow(i, new FIRCard(this, list.get(i)));
             }
+        else
+            MSGBox.message("Some error occurred");
 
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setStyle("-fx-background: #191919; -fx-border-width: 0; ");
