@@ -252,9 +252,10 @@ class FIRViewForm extends BorderPane {
         gp.setVgap(15);
         gp.setHgap(25);
 
-        for(int i = 0; i < list.size(); i++) {
-            gp.addRow(i, new FIRCard(this, list.get(i)));
-        }
+        if(list != null)
+            for(int i = 0; i < list.size(); i++) {
+                gp.addRow(i, new FIRCard(this, list.get(i)));
+            }
 
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setStyle("-fx-background: #191919; -fx-border-width: 0; ");
