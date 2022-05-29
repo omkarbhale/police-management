@@ -24,7 +24,7 @@ public class CriminalModel {
                         criminal.firstname,
                         criminal.middlename,
                         criminal.lastname,
-                        criminal.DOB,
+                        criminal.DOB.getYear() + "-" + criminal.DOB.getMonth() + "-" + criminal.DOB.getDate(),
                         criminal.address
                 )
         );

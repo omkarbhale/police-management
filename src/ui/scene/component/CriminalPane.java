@@ -180,7 +180,7 @@ class CriminalViewForm extends BorderPane {
             deleteButton.setOnAction(e -> delete(criminal));
 
             addRow(0, idLabel, firstNameLabel, middleNameLabel, lastNameLabel);
-            addRow(1, lastNameLabel, dobLabel, addressLabel, deleteButton);
+            addRow(1, dobLabel, addressLabel, deleteButton);
         }
 
         private void delete(Criminal criminal) {

@@ -23,7 +23,7 @@ public class PoliceModel {
                         police.middleName,
                         police.lastName,
                         police.post,
-                        police.DOB,
+                        police.DOB.getYear() + "-" + police.DOB.getMonth() + "-" + police.DOB.getDate(),
                         police.contactNo,
                         police.address
 
