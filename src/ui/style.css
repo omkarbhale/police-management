@@ -46,9 +46,14 @@
   -fx-tab-max-height:50px;
 }
 
+.tab-label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
 .tab {
-    -fx-background-color: royalblue;
+    -fx-pref-width: 450;
     -fx-font-size: 18pt;
+    -fx-background-color: royalblue;
 }
 
 .tab:selected {

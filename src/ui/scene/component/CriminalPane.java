@@ -262,8 +262,11 @@ public class CriminalPane extends BorderPane {
     private void initialize() {
         tabPane = new TabPane();
 
-        Tab t1 = new Tab("Insert Criminal");
-        Tab t2 = new Tab("View Criminals");
+        Tab t1 = new Tab("Insert");
+        Tab t2 = new Tab("View all");
+
+        tabPane.setTabMinWidth(450);
+
 
         tabPane.getTabs().addAll(
                 t1, t2
