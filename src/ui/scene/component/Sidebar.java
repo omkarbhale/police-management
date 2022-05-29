@@ -40,9 +40,11 @@ public class Sidebar extends VBox {
         });
         criminalButton.setOnAction(e -> {
             selectButton(criminalButton);
+            parentScene.setContent(new CriminalPane());
         });
         policeButton.setOnAction(e -> {
             selectButton(policeButton);
+//            parentScene.setContent(new PolicePane());
         });
         logoutButton.setOnAction(e -> logOut() );
 
