@@ -1,6 +1,6 @@
 package entities;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class FIR {
 
@@ -10,13 +10,15 @@ public class FIR {
     public Date date;
     public String Location;
     public int Severity;
+    public String crime;
 
-    public FIR(int _FIR_id,int _Police_id,int _Criminal_id,Date _date,String _Location,int _Severity){
+    public FIR(int _FIR_id,int _Police_id,int _Criminal_id,Date _date,String _Location,int _Severity, String crime){
         FIR_id=_FIR_id;
         Police_id=_Police_id;
         Criminal_id=_Criminal_id;
         date=_date;
         Location=_Location;
         Severity=_Severity;
+        this.crime = crime;
     }
 }

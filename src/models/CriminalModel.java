@@ -4,63 +4,60 @@ import db.query.Condition;
 import db.query.DeleteQuery;
 import db.query.InsertQuery;
 import db.query.SelectQuery;
-import entities.FIR;
+import entities.Criminal;
 
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-public class FIRModel {
-    private FIRModel() {}
+public class CriminalModel {
 
-    public static boolean save(FIR fir) {
+    private CriminalModel(){}
+
+    public static boolean save(Criminal criminal){
         InsertQuery insertQuery = new InsertQuery(
-                "FIR",
+                "Criminal",
                 List.of(
-                        fir.FIR_id,
-                        fir.Police_id,
-                        fir.Criminal_id,
-                        fir.date.getYear() + "-" + fir.date.getMonth() + "-" + fir.date.getDate(),
-                        fir.Location,
-                        fir.Severity,
-                        fir.crime
-
+                        criminal.Criminal_id,
+                        criminal.firstname,
+                        criminal.middlename,
+                        criminal.lastname,
+                        criminal.DOB,
+                        criminal.address
                 )
         );
         try {
             insertQuery.execute();
             return true;
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
             return false;
         }
     }
 
-    public static ArrayList<FIR> findAll() {
-        ArrayList<FIR> list = new ArrayList<>();
+    public static ArrayList<Criminal> findAll() {
+        ArrayList<Criminal> list = new ArrayList<>();
         SelectQuery selectQuery = new SelectQuery(
-                "FIR",
+                "Criminal",
                 null,
                 null
         );
+
         try {
             ResultSet resultSet = selectQuery.execute();
 
             while (resultSet.next()) {
-                FIR fir = new FIR(
+                Criminal criminal = new Criminal(
                         resultSet.getInt(1),
-                        resultSet.getInt(2),
-                        resultSet.getInt(3),
-                        resultSet.getDate(4),
-                        resultSet.getString(5),
-                        resultSet.getInt(6),
-                        resultSet.getString(7)
+                        resultSet.getString(2),
+                        resultSet.getString(3),
+                        resultSet.getString(4),
+                        resultSet.getDate(5),
+                        resultSet.getString(6)
                 );
 
-                list.add(fir);
+                list.add(criminal);
             }
             resultSet.close();
             return list;
@@ -69,10 +66,10 @@ public class FIRModel {
         }
     }
 
-    public static boolean delete(FIR fir) {
+    public static boolean delete(Criminal criminal) {
         DeleteQuery deleteQuery = new DeleteQuery(
-                "FIR",
-                new Condition("FIR_id = " + fir.FIR_id)
+                "Criminal",
+                new Condition("Criminal_id = " + criminal.Criminal_id)
         );
 
         try {
@@ -82,5 +79,4 @@ public class FIRModel {
             return false;
         }
     }
-
 }

@@ -192,7 +192,7 @@ class FIRViewForm extends BorderPane {
             setStyle("-fx-border-color: #f0f0f0; -fx-border-width: 1px; ");
 
 
-            idLabel = new Label("FIR ID: " + fir.id);
+            idLabel = new Label("FIR ID: " + fir.Police_id);
             policeIdLabel = new Label("Police ID: " + fir.Police_id);
             criminalIdLabel = new Label("Criminal ID: " + fir.Criminal_id);
             crimeLabel = new Label("Crime: " + fir.crime);

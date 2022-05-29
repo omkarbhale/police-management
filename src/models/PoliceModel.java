@@ -73,7 +73,7 @@ public class PoliceModel {
     public static boolean delete(Police police) {
         DeleteQuery deleteQuery = new DeleteQuery(
                 "police_staff",
-                new Condition("id = " + police.Police_id)
+                new Condition("Police_id = " + police.Police_id)
         );
 
         try {
