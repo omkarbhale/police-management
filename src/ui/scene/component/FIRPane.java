@@ -178,6 +178,7 @@ class FIRViewForm extends BorderPane {
         Label locationLabel;
         Label severityLabel;
         Button deleteButton;
+
         FIRCard(FIRViewForm parent, FIR fir) {
             this.parent = parent;
             initialize(fir);
