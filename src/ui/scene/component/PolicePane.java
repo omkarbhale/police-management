@@ -1,6 +1,6 @@
 package ui.scene.component;
 
-import entities.Criminal;
+import entities.Police;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -10,7 +10,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import models.CriminalModel;
+import models.PoliceModel;
 import ui.util.MSGBox;
 
 import java.time.LocalDate;
@@ -18,14 +18,14 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 
-class CriminalInsertForm extends BorderPane {
-    private static CriminalInsertForm instance;
+class PoliceInsertForm extends BorderPane {
+    private static PoliceInsertForm instance;
 
-    public static CriminalInsertForm getInstance() {
-        if(CriminalInsertForm.instance == null) {
-            CriminalInsertForm.instance = new CriminalInsertForm();
+    public static PoliceInsertForm getInstance() {
+        if(PoliceInsertForm.instance == null) {
+            PoliceInsertForm.instance = new PoliceInsertForm();
         }
-        return CriminalInsertForm.instance;
+        return PoliceInsertForm.instance;
     }
 
     GridPane gp;
@@ -34,26 +34,32 @@ class CriminalInsertForm extends BorderPane {
     Label firstNameLabel;
     Label middleNameLabel;
     Label lastNameLabel;
+    Label postLabel;
     Label dobLabel;
+    Label contactNoLabel;
     Label addressLabel;
 
     TextField firstNameField;
     TextField middleNameField;
     TextField lastNameField;
+    TextField postField;
     DatePicker dobPicker;
+    TextField contactNoField;
     TextField addressField;
 
     Button submitButton;
     Button clearButton;
 
-    private CriminalInsertForm() {
+    private PoliceInsertForm() {
         initialize();
 
         gp.getChildren().addAll(
                 firstNameLabel, firstNameField,
                 middleNameLabel, middleNameField,
                 lastNameLabel, lastNameField,
+                postLabel, postField,
                 dobLabel, dobPicker,
+                contactNoLabel, contactNoField,
                 addressLabel, addressField,
                 clearButton, submitButton
         );
@@ -70,19 +76,23 @@ class CriminalInsertForm extends BorderPane {
         gp.setVgap(15);
         gp.setHgap(25);
 
-        titleLabel = new Label("Insert Criminal");
+        titleLabel = new Label("Insert Police");
         titleLabel.setFont(Font.font(null, FontWeight.BOLD, 26));
 
         firstNameLabel = new Label("First name:");
         middleNameLabel = new Label("Middle name:");
         lastNameLabel = new Label("Last name:");
+        postLabel = new Label("Post");
         dobLabel = new Label("Date of birth:");
+        contactNoLabel = new Label("Contact number");
         addressLabel = new Label("Address:");
 
         firstNameField = getTextField("First name");
         middleNameField = getTextField("Middle name");
         lastNameField = getTextField("Last name");
-        dobPicker = new DatePicker(); dobPicker.setPromptText("Date"); dobPicker.getEditor().setDisable(true);
+        postField = getTextField("Post");
+        dobPicker = new DatePicker(); dobPicker.setPromptText("Date of birth"); dobPicker.getEditor().setDisable(true);
+        contactNoField = getTextField("Contact number"); contactNoField.setOnKeyTyped(e -> validateNumber(contactNoField));
         addressField = getTextField("Address");
 
         submitButton = new Button("Submit");
@@ -98,12 +108,16 @@ class CriminalInsertForm extends BorderPane {
         GridPane.setConstraints(middleNameField, 1, 1);
         GridPane.setConstraints(lastNameLabel, 0, 2);
         GridPane.setConstraints(lastNameField, 1, 2);
-        GridPane.setConstraints(dobLabel, 0, 3);
-        GridPane.setConstraints(dobPicker, 1, 3);
-        GridPane.setConstraints(addressLabel, 0, 4);
-        GridPane.setConstraints(addressField, 1, 4);
-        GridPane.setConstraints(clearButton, 0, 5);
-        GridPane.setConstraints(submitButton, 1, 5);
+        GridPane.setConstraints(postLabel, 0, 3);
+        GridPane.setConstraints(postField, 1, 3);
+        GridPane.setConstraints(dobLabel, 0, 4);
+        GridPane.setConstraints(dobPicker, 1, 4);
+        GridPane.setConstraints(contactNoLabel, 0, 5);
+        GridPane.setConstraints(contactNoField, 1, 5);
+        GridPane.setConstraints(addressLabel, 0, 6);
+        GridPane.setConstraints(addressField, 1, 6);
+        GridPane.setConstraints(clearButton, 0, 7);
+        GridPane.setConstraints(submitButton, 1, 7);
     }
 
     private TextField getTextField(String promptText) {
@@ -113,17 +127,19 @@ class CriminalInsertForm extends BorderPane {
     }
 
     private void submit() {
-        Criminal criminal = new Criminal(
+        Police police = new Police(
                 (int) (Math.random() * 1000),
                 firstNameField.getText(),
                 middleNameField.getText(),
                 lastNameField.getText(),
+                postField.getText(),
                 getDate(dobPicker),
+                contactNoField.getText(),
                 addressField.getText()
         );
-        boolean isSaved = CriminalModel.save(criminal);
+        boolean isSaved = PoliceModel.save(police);
         if(isSaved) {
-            MSGBox.message("Criminal saved successfully");
+            MSGBox.message("Police saved successfully");
             clearFields();
         } else {
             MSGBox.message("Some error occurred!");
@@ -134,7 +150,9 @@ class CriminalInsertForm extends BorderPane {
         firstNameField.setText(null);
         middleNameField.setText(null);
         lastNameField.setText(null);
+        postField.setText(null);
         dobPicker.setValue(null);
+        contactNoField.setText(null);
         addressField.setText(null);
     }
 
@@ -142,25 +160,36 @@ class CriminalInsertForm extends BorderPane {
         LocalDate localDate = datePicker.getValue();
         return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
+
+    private void validateNumber(TextField textField) {
+        String str = textField.getText();
+        try {
+            Integer.parseInt(str);
+        } catch (Exception e) {
+            textField.setText(null);
+        }
+    }
 }
 
-class CriminalViewForm extends BorderPane {
-    class CriminalCard extends GridPane {
-        CriminalViewForm parent;
+class PoliceViewForm extends BorderPane {
+    class PoliceCard extends GridPane {
+        PoliceViewForm parent;
         Label idLabel;
         Label firstNameLabel;
         Label middleNameLabel;
         Label lastNameLabel;
+        Label postLabel;
         Label dobLabel;
+        Label contactNoLabel;
         Label addressLabel;
         Button deleteButton;
 
-        CriminalCard(CriminalViewForm parent, Criminal criminal) {
+        PoliceCard(PoliceViewForm parent, Police police) {
             this.parent = parent;
-            initialize(criminal);
+            initialize(police);
         }
 
-        private void initialize(Criminal criminal) {
+        private void initialize(Police police) {
             setHgap(80);
             setVgap(10);
             setPadding(new Insets(20, 20, 20, 20));
@@ -168,45 +197,47 @@ class CriminalViewForm extends BorderPane {
             setStyle("-fx-border-color: #f0f0f0; -fx-border-width: 1px; ");
 
 
-            idLabel = new Label("Criminal ID: " + criminal.Criminal_id);
-            firstNameLabel = new Label("First name: " + criminal.firstname);
-            middleNameLabel = new Label("Criminal ID: " + criminal.middlename);
-            lastNameLabel = new Label("Crime: " + criminal.lastname);
-            dobLabel = new Label("Date: " + criminal.DOB);
-            addressLabel = new Label("Location: " + criminal.address);
+            idLabel = new Label("Police ID: " + police.Police_id);
+            firstNameLabel = new Label("First name:" + police.firstName);
+            middleNameLabel = new Label("Middle name:" + police.middleName);
+            lastNameLabel = new Label("Last name:" + police.lastName);
+            postLabel = new Label("Post:" + police.post);
+            dobLabel = new Label("Date: " + police.DOB);
+            contactNoLabel = new Label("Contact number:" + police.contactNo);
+            addressLabel = new Label("Address: " + police.address);
 
             deleteButton = new Button("Delete");
-            deleteButton.setOnAction(e -> delete(criminal));
+            deleteButton.setOnAction(e -> delete(police));
 
-            addRow(0, idLabel, firstNameLabel, middleNameLabel, lastNameLabel);
-            addRow(1, dobLabel, addressLabel, deleteButton);
+            addRow(0, idLabel, firstNameLabel, middleNameLabel, lastNameLabel, deleteButton);
+            addRow(1, postLabel, dobLabel, contactNoLabel,  addressLabel);
         }
 
-        private void delete(Criminal criminal) {
-            if(CriminalModel.delete(criminal)) {
+        private void delete(Police police) {
+            if(PoliceModel.delete(police)) {
                 MSGBox.message("Deleted successfully");
-                parent.loadCriminals();
+                parent.loadPolice();
             } else {
                 MSGBox.message("Some error occurred");
             }
         }
     }
 
-    private static CriminalViewForm instance;
+    private static PoliceViewForm instance;
 
-    public static CriminalViewForm getInstance() {
-        if(CriminalViewForm.instance == null) {
-            CriminalViewForm.instance = new CriminalViewForm();
+    public static PoliceViewForm getInstance() {
+        if(PoliceViewForm.instance == null) {
+            PoliceViewForm.instance = new PoliceViewForm();
         }
-        CriminalViewForm.instance.loadCriminals();
-        return CriminalViewForm.instance;
+        PoliceViewForm.instance.loadPolice();
+        return PoliceViewForm.instance;
     }
 
     GridPane gp;
     Label titleLabel;
-    ArrayList<Criminal> list;
+    ArrayList<Police> list;
 
-    private CriminalViewForm() {
+    private PoliceViewForm() {
         initialize();
 
         setPadding(new Insets(10, 10, 10, 10));
@@ -214,13 +245,13 @@ class CriminalViewForm extends BorderPane {
     }
 
     private void initialize() {
-        titleLabel = new Label("View Criminal");
+        titleLabel = new Label("View Police");
         titleLabel.setFont(Font.font(null, FontWeight.BOLD, 26));
-        loadCriminals();
+        loadPolice();
     }
 
-    private void loadCriminals() {
-        list = CriminalModel.findAll();
+    private void loadPolice() {
+        list = PoliceModel.findAll();
 
         gp = new GridPane();
         gp.setAlignment(Pos.CENTER);
@@ -230,7 +261,7 @@ class CriminalViewForm extends BorderPane {
 
         if(list != null)
             for(int i = 0; i < list.size(); i++) {
-                gp.addRow(i, new CriminalCard(this, list.get(i)));
+                gp.addRow(i, new PoliceCard(this, list.get(i)));
             }
         else
             MSGBox.message("Some error occurred");
@@ -243,11 +274,11 @@ class CriminalViewForm extends BorderPane {
     }
 }
 
-public class CriminalPane extends BorderPane {
+public class PolicePane extends BorderPane {
 
     TabPane tabPane;
 
-    CriminalPane() {
+    PolicePane() {
         super();
         initialize();
 
@@ -255,7 +286,7 @@ public class CriminalPane extends BorderPane {
         vb.getChildren().addAll(tabPane);
 
         setTop(vb);
-        setContent(CriminalInsertForm.getInstance());
+        setContent(PoliceInsertForm.getInstance());
     }
 
     private void initialize() {
@@ -266,7 +297,6 @@ public class CriminalPane extends BorderPane {
 
         tabPane.setTabMinWidth(450);
 
-
         tabPane.getTabs().addAll(
                 t1, t2
         );
@@ -274,9 +304,9 @@ public class CriminalPane extends BorderPane {
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
         tabPane.getSelectionModel().selectedItemProperty().addListener((o, oldTab, newTab) -> {
             if(newTab == t1) {
-                setContent(CriminalInsertForm.getInstance());
+                setContent(PoliceInsertForm.getInstance());
             } else if(newTab == t2) {
-                setContent(CriminalViewForm.getInstance());
+                setContent(PoliceViewForm.getInstance());
             }
         });
     }
