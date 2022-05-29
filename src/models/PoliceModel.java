@@ -9,8 +9,8 @@ import java.util.List;
 public class PoliceModel {
     private PoliceModel() {}
 
-    public static void save(Police police) {
-
+    public static boolean save(Police police) {
+        return true;
     }
 
 /*

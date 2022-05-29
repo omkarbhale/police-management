@@ -53,5 +53,9 @@
 
 .tab:selected {
     -fx-background-color: blue;
+}
 
+.date-picker-popup > .month-year-pane {
+    -fx-base: #1d1d1d ;
+    -fx-mark-highlight-color: -fx-light-text-color ;
 }

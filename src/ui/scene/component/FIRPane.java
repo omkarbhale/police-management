@@ -1,6 +1,6 @@
 package ui.scene.component;
 
-import entities.Police;
+import entities.FIR;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -10,6 +10,13 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import models.FIRModel;
+import ui.util.MSGBox;
+
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Date;
 
 class FIRInsertForm extends BorderPane {
     private static FIRInsertForm instance;
@@ -29,14 +36,17 @@ class FIRInsertForm extends BorderPane {
     Label dateLabel;
     Label locationLabel;
     Label severityLabel;
+    Label crimeLabel;
 
     TextField policeInChargeField;
     TextField criminalField;
     DatePicker datePicker;
     TextField locationField;
     TextField severityField;
+    TextField crimeField;
 
     Button submitButton;
+    Button clearButton;
 
     private FIRInsertForm() {
         initialize();
@@ -47,7 +57,8 @@ class FIRInsertForm extends BorderPane {
                 dateLabel, datePicker,
                 locationLabel, locationField,
                 severityLabel, severityField,
-                submitButton
+                crimeLabel, crimeField,
+                clearButton, submitButton
         );
 
         setPadding(new Insets(10, 10, 10, 10));
@@ -68,29 +79,39 @@ class FIRInsertForm extends BorderPane {
         policeInChargeLabel = new Label("Police ID:");
         criminalLabel = new Label("Criminal ID:");
         dateLabel = new Label("Date:");
-        locationLabel = new Label("Location");
-        severityLabel = new Label("Severity");
+        locationLabel = new Label("Location:");
+        severityLabel = new Label("Severity:");
+        crimeLabel = new Label("Crime:");
 
-        policeInChargeField = getTextField("Police in charge");
-        criminalField = getTextField("Criminal ID");
-        datePicker = new DatePicker(); datePicker.setPromptText("Date");
+        policeInChargeField = getTextField("Police in charge"); policeInChargeField.setOnKeyTyped(e -> validateNumber(policeInChargeField));
+        criminalField = getTextField("Criminal ID"); criminalField.setOnKeyTyped(e -> validateNumber(criminalField));
+        datePicker = new DatePicker(); datePicker.setPromptText("Date"); datePicker.getEditor().setDisable(true);
         locationField = getTextField("Location");
-        severityField = getTextField("Number from 1 to 10");
+        severityField = getTextField("Number from 1 to 10"); severityField.setOnKeyTyped(e -> validateNumber(severityField));
+        crimeField = getTextField("Crime");
 
         submitButton = new Button("Submit");
+        clearButton = new Button("Clear");
         submitButton.setStyle("-fx-font-size: 20pt; ");
+        clearButton.setStyle("-fx-font-size: 20pt; ");
+        submitButton.setOnAction(e -> submit());
+        clearButton.setOnAction(e -> clearFields());
+
 
         GridPane.setConstraints(policeInChargeLabel, 0, 0);
-        GridPane.setConstraints(policeInChargeField, 2, 0);
+        GridPane.setConstraints(policeInChargeField, 1, 0);
         GridPane.setConstraints(criminalLabel, 0, 1);
-        GridPane.setConstraints(criminalField, 2, 1);
+        GridPane.setConstraints(criminalField, 1, 1);
         GridPane.setConstraints(dateLabel, 0, 2);
-        GridPane.setConstraints(datePicker, 2, 2);
+        GridPane.setConstraints(datePicker, 1, 2);
         GridPane.setConstraints(locationLabel, 0, 3);
-        GridPane.setConstraints(locationField, 2, 3);
+        GridPane.setConstraints(locationField, 1, 3);
         GridPane.setConstraints(severityLabel, 0, 4);
-        GridPane.setConstraints(severityField, 2, 4);
-        GridPane.setConstraints(submitButton, 2, 6);
+        GridPane.setConstraints(severityField, 1, 4);
+        GridPane.setConstraints(crimeLabel, 0, 5);
+        GridPane.setConstraints(crimeField, 1, 5);
+        GridPane.setConstraints(submitButton, 1, 6);
+        GridPane.setConstraints(clearButton, 0, 6);
     }
 
     private TextField getTextField(String promptText) {
@@ -99,12 +120,101 @@ class FIRInsertForm extends BorderPane {
         return textField;
     }
 
-    private void submit() {
+    private void validateNumber(TextField textField) {
+        String str = textField.getText();
+        try {
+            int n = Integer.parseInt(str);
+        } catch (Exception e) {
+            textField.setText(null);
+        }
+    }
 
+    private void submit() {
+        try {
+            FIR fir = new FIR(
+                    (int) (Math.random() * 1000),
+                    Integer.parseInt(policeInChargeField.getText()),
+                    Integer.parseInt(criminalField.getText()),
+                    getDate(datePicker),
+                    locationField.getText(),
+                    Integer.parseInt(severityField.getText()),
+                    crimeField.getText()
+            );
+            boolean isSaved = FIRModel.save(fir);
+            if(isSaved) {
+                MSGBox.message("FIR saved successfully");
+                clearFields();
+            } else {
+                MSGBox.message("Some error occurred!");
+            }
+        } catch (Exception e) {
+            MSGBox.message("IDs should be numbers");
+        }
+    }
+
+    private void clearFields() {
+        policeInChargeField.setText(null);
+        criminalField.setText(null);
+        datePicker.setValue(null);
+        locationField.setText(null);
+        severityField.setText(null);
+        crimeField.setText(null);
+    }
+
+    private Date getDate(DatePicker datePicker) {
+        LocalDate localDate = datePicker.getValue();
+        return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
 }
 
-class FIRViewForm extends GridPane {
+class FIRViewForm extends BorderPane {
+    class FIRCard extends GridPane {
+        FIRViewForm parent;
+        Label idLabel;
+        Label policeIdLabel;
+        Label criminalIdLabel;
+        Label crimeLabel;
+        Label dateLabel;
+        Label locationLabel;
+        Label severityLabel;
+        Button deleteButton;
+        FIRCard(FIRViewForm parent, FIR fir) {
+            this.parent = parent;
+            initialize(fir);
+        }
+
+        private void initialize(FIR fir) {
+            setHgap(80);
+            setVgap(10);
+            setPadding(new Insets(20, 20, 20, 20));
+            setAlignment(Pos.TOP_CENTER);
+            setStyle("-fx-border-color: #f0f0f0; -fx-border-width: 1px; ");
+
+
+            idLabel = new Label("FIR ID: " + fir.id);
+            policeIdLabel = new Label("Police ID: " + fir.Police_id);
+            criminalIdLabel = new Label("Criminal ID: " + fir.Criminal_id);
+            crimeLabel = new Label("Crime: " + fir.crime);
+            dateLabel = new Label("Date: " + fir.date);
+            locationLabel = new Label("Location: " + fir.Location);
+            severityLabel = new Label("Severity: " + fir.Severity);
+
+            deleteButton = new Button("Delete");
+            deleteButton.setOnAction(e -> delete(fir));
+
+            addRow(0, idLabel, policeIdLabel, criminalIdLabel, crimeLabel);
+            addRow(1, dateLabel, locationLabel, severityLabel, deleteButton);
+        }
+
+        private void delete(FIR fir) {
+            if(FIRModel.delete(fir)) {
+                MSGBox.message("Deleted successfully");
+                parent.loadFIRs();
+            } else {
+                MSGBox.message("Some error occurred");
+            }
+        }
+    }
 
     private static FIRViewForm instance;
 
@@ -115,8 +225,41 @@ class FIRViewForm extends GridPane {
         return FIRViewForm.instance;
     }
 
+    GridPane gp;
+    Label titleLabel;
+    ArrayList<FIR> list;
+
     private FIRViewForm() {
-        getChildren().add(new Label("VIEW FORM HERE"));
+        initialize();
+
+        setPadding(new Insets(10, 10, 10, 10));
+        setTop(titleLabel);
+    }
+
+    private void initialize() {
+        titleLabel = new Label("View FIR");
+        titleLabel.setFont(Font.font(null, FontWeight.BOLD, 26));
+        loadFIRs();
+    }
+
+    private void loadFIRs() {
+        list = FIRModel.findAll();
+
+        gp = new GridPane();
+        gp.setAlignment(Pos.CENTER);
+        gp.setPadding(new Insets(10, 10, 10, 10));
+        gp.setVgap(15);
+        gp.setHgap(25);
+
+        for(int i = 0; i < list.size(); i++) {
+            gp.addRow(i, new FIRCard(this, list.get(i)));
+        }
+
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setStyle("-fx-background: #191919; -fx-border-width: 0; ");
+        scrollPane.setContent(gp);
+
+        setCenter(scrollPane);
     }
 }
 
