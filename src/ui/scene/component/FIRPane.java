@@ -148,7 +148,7 @@ class FIRInsertForm extends BorderPane {
                 MSGBox.message("Error", "Some error occurred!");
             }
         } catch (Exception e) {
-            MSGBox.message("Error", "IDs should be numbers");
+            MSGBox.message("Error", "Fields can't be empty");
         }
     }
 

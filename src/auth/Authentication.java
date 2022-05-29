@@ -38,6 +38,12 @@ public class Authentication {
         }
     }
 
+    public boolean createUser(String username, String password) {
+        // return true if user is created
+        // else return false
+        return true;
+    }
+
     public void logOut() {
         if(!isAuthenticated) return;
         isAuthenticated = false;

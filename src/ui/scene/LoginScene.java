@@ -6,12 +6,12 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.stage.Stage;
 import ui.SceneManager;
 
 public class LoginScene extends Scene {
@@ -21,7 +21,7 @@ public class LoginScene extends Scene {
     Label passLabel;
 
     TextField usernameField;
-    TextField passField;
+    PasswordField passField;
 
     Button loginButton;
     Button signupButton;
@@ -75,7 +75,7 @@ public class LoginScene extends Scene {
         });
         usernameField.focusedProperty().addListener((obs, oldVal, newVal) -> highlightRed(usernameField, false));
 
-        passField = new TextField();
+        passField = new PasswordField();
         passField.setPromptText("Password");
         passField.setOnKeyTyped(e -> {
             highlightRed(usernameField, false);
@@ -86,7 +86,8 @@ public class LoginScene extends Scene {
         loginButton = new Button("Login");
         loginButton.setOnAction(e -> logIn(usernameField.getText(), passField.getText()) );
 
-        signupButton = new Button("Sign up");
+        signupButton = new Button("Sign up instead");
+        signupButton.setOnAction(e -> signUp());
 
         //DropShadow effect
         DropShadow dropShadow = new DropShadow();
@@ -119,6 +120,10 @@ public class LoginScene extends Scene {
         }
         highlightRed(usernameField, true);
         highlightRed(passField, true);
+    }
+
+    private void signUp() {
+        SceneManager.getInstance().loadScene(SignUpScene.scene());
     }
 
     private void highlightRed(TextField field, boolean set) {
