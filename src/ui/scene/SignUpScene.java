@@ -97,7 +97,7 @@ public class SignUpScene extends Scene {
         title.setFont(Font.font("Courier New", FontWeight.BOLD, 52));
         title.setEffect(dropShadow);
 
-        loginHeading = new Label("Log in");
+        loginHeading = new Label("Sign up");
         loginHeading.setFont(Font.font(null, FontWeight.BOLD, 26));
     }
 

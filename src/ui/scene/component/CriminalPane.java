@@ -170,10 +170,10 @@ class CriminalViewForm extends BorderPane {
 
             idLabel = new Label("Criminal ID: " + criminal.Criminal_id);
             firstNameLabel = new Label("First name: " + criminal.firstname);
-            middleNameLabel = new Label("Criminal ID: " + criminal.middlename);
-            lastNameLabel = new Label("Crime: " + criminal.lastname);
-            dobLabel = new Label("Date: " + criminal.DOB);
-            addressLabel = new Label("Location: " + criminal.address);
+            middleNameLabel = new Label("Middle name: " + criminal.middlename);
+            lastNameLabel = new Label("Last name: " + criminal.lastname);
+            dobLabel = new Label("Date of birth: " + criminal.DOB);
+            addressLabel = new Label("Address: " + criminal.address);
 
             deleteButton = new Button("Delete");
             deleteButton.setOnAction(e -> delete(criminal));
@@ -214,7 +214,7 @@ class CriminalViewForm extends BorderPane {
     }
 
     private void initialize() {
-        titleLabel = new Label("View Criminal");
+        titleLabel = new Label("View Criminals");
         titleLabel.setFont(Font.font(null, FontWeight.BOLD, 26));
         loadCriminals();
     }
